@@ -7,7 +7,7 @@
 # variables
 dir=~/.dotfiles                         # dotfiles directory
 olddir=~/dotfiles_old                   # old dotfiles backup directory
-files="bash_profile vimrc vim gitconfig"      # list of files/folders to symlink in homedir
+files="bash_profile vimrc vim gitconfig config"      # list of files/folders to symlink in homedir
 
 # move dotfiles to .dotfiles hidden folder
 mv ~/dotfiles $dir

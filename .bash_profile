@@ -33,6 +33,7 @@ export LSCOLORS=fxdxcxgxBxHxexbDfDehbh
 export HISTCONTROL="erasedups"
 export HISTIGNORE="ls:ll:la:lab"
 export JENKINS_DIR=${HOME}/bin/jinkens
+export EDITOR=nvim
 
 # Setup a red prompt for root and a green one for users.
 NORMAL="\[\e[0m\]"
