@@ -1,0 +1,9 @@
+#!/bin/sh
+# running the OS X system python. Required to import the lldb module.
+export PYTHONPATH="/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python"
+
+# enable these for debugging
+#echo "--" >> ~/syspython2.log
+#echo "$@" >> ~/syspython2.log
+/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python "$@"
+

@@ -151,3 +151,7 @@ git-sync () {
 #######################################
 eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/shims:$PATH"
+
+# LLDB Path Support
+export PATH="/usr/bin:$PATH"
+export PYTHONPATH="/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python:$PYTHONPATH"
