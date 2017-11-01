@@ -4,10 +4,16 @@
 # This script creates symlinks from the home directory to any desired dotfiles in ~/.dotfiles
 ############################
 
+# Install Homebrew https://brew.sh
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# Install emacs via Homebrew
+brew install emacs --with-cocoa
+
 # variables
 dir=~/.dotfiles                         # dotfiles directory
 olddir=~/dotfiles_old                   # old dotfiles backup directory
-files="bash_profile vimrc vim gitconfig config"      # list of files/folders to symlink in homedir
+files="bash_profile vimrc vim gitconfig config emacs.d"      # list of files/folders to symlink in homedir
 
 # move dotfiles to .dotfiles hidden folder
 mv ~/dotfiles $dir
