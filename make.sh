@@ -13,6 +13,16 @@ else
     brew update
 fi
 
+
+############################################
+# Homebrew
+#############################################
+# Install neo vim via Homebrew
+if brew ls --versions neovim > /dev/null; then
+    echo "neovim already installed"
+else
+    brew install neovim
+fi
 # Install emacs via Homebrew
 if brew ls --versions emacs > /dev/null; then
     echo "emacs already installed"
@@ -21,13 +31,27 @@ else
 fi
 
 
+##########################################
+# git clones
+#########################################
+if [ ! -d "$~/Documents/github/git" ]; then
+    echo "Clone git repo"
+    pre=pwd
+    cd ~/Documents/github
+    git clone git@github.com:git/git.git
+    cd pre
+fi
+
+###############################################
+# Dotfiles
+##############################################
 # variables
 dir=~/.dotfiles                         # dotfiles directory
 olddir=~/dotfiles_old                   # old dotfiles backup directory
 files="bash_profile vimrc vim gitconfig config emacs.d/init.el"      # list of files/folders to symlink in homedir
 
 # move dotfiles to .dotfiles hidden folder
-cp ~/dotfiles $dir
+cp -rf ../dotfiles $dir
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~"
