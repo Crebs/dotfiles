@@ -5,10 +5,21 @@
 ############################
 
 # Install Homebrew https://brew.sh
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+which -s brew
+if [[ $? != 0 ]] ; then
+    # Install Homebrew
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+else
+    brew update
+fi
 
 # Install emacs via Homebrew
-brew install emacs --with-cocoa
+if brew ls --versions emacs > /dev/null; then
+    echo "emacs already installed"
+else
+    brew install emacs --with-cocoa
+fi
+
 
 # variables
 dir=~/.dotfiles                         # dotfiles directory
