@@ -13,10 +13,10 @@ brew install emacs --with-cocoa
 # variables
 dir=~/.dotfiles                         # dotfiles directory
 olddir=~/dotfiles_old                   # old dotfiles backup directory
-files="bash_profile vimrc vim gitconfig config emacs.d"      # list of files/folders to symlink in homedir
+files="bash_profile vimrc vim gitconfig config emacs.d/init.el"      # list of files/folders to symlink in homedir
 
 # move dotfiles to .dotfiles hidden folder
-mv ~/dotfiles $dir
+cp ~/dotfiles $dir
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~"
@@ -29,8 +29,8 @@ cd $dir
 echo "...done"
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
+echo "Moving any existing dotfiles from ~ to $olddir"
 for file in $files; do
-    echo "Moving any existing dotfiles from ~ to $olddir"
     mv ~/.$file ~/dotfiles_old/
     echo "Creating symlink to $file in home directory."
     ln -s $dir/.$file ~/.$file
