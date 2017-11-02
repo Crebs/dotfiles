@@ -26,7 +26,7 @@
 #	HISTIGNORE -
 #	EDITOR -
 ########################################################################################
-export PATH=${PATH}:/usr/local/Cellar/ruby/1.9.2-p136/bin:${HOME}/bin:/usr/local/bin:~/bin:~/bin/git:~/Library/Android/sdk/platform-tools
+export PATH=${PATH}:${HOME}/bin:/usr/local/bin:~/bin:~/bin/git:~/Library/Android/sdk/platform-tools
 export MAKEFILES=${HOME}/bin/makefile
 export CLICOLOR=1
 export LSCOLORS=fxdxcxgxBxHxexbDfDehbh
@@ -69,14 +69,9 @@ alias la='ls -alF'
 alias gsubmodule='git submodule update --init --recursive'
 alias s='say -v Daniel'
 alias vim=nvim
+alias emx=emacs
 
-##
-# Your previous /Users/rileycrebs/.bash_profile file was backed up as /Users/rileycrebs/.bash_profile.macports-saved_2014-01-17_at_22:38:34
-##
-
-# MacPorts Installer addition on 2014-01-17_at_22:38:34: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
 
 # point to postgresql
 export PATH=/usr/local/Cellar/postgresql/9.4.0/bin:$PATH
@@ -148,10 +143,3 @@ git-stash () {
 git-sync () {
 	git submodule sync --recursive
 }
-#######################################
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/shims:$PATH"
-
-# LLDB Path Support
-export PATH="/usr/bin:$PATH"
-export PYTHONPATH="/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python:$PYTHONPATH"
