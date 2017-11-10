@@ -77,9 +77,6 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # point to postgresql
 export PATH=/usr/local/Cellar/postgresql/9.4.0/bin:$PATH
 
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # Function to run git operations
 git-checkout() {
 	git checkout $1
