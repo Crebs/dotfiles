@@ -34,6 +34,7 @@ export HISTCONTROL="erasedups"
 export HISTIGNORE="ls:ll:la:lab"
 export JENKINS_DIR=${HOME}/bin/jinkens
 export EDITOR=nvim
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # Setup a red prompt for root and a green one for users.
 NORMAL="\[\e[0m\]"
