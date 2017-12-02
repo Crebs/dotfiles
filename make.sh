@@ -36,10 +36,19 @@ fi
 ##########################################
 # git clones
 #########################################
-if [ ! -d "$~/Documents/github/git" ]; then
+if [ ! -d ~/Documents/github/git ];
+then
     echo "Clone git repo"
     cd ~/Documents/github
     git clone git@github.com:git/git.git
+    cd ~/Documents/github/dotfiles
+fi
+
+if [ ! -e ~/Documents/github/djinni-mode.el ];
+then
+    echo "Clone threeve repo"
+    cd ~/Documents/github
+    git clone https://github.com/threeve/djinni-mode.el.git
     cd ~/Documents/github/dotfiles
 fi
 
@@ -48,7 +57,7 @@ fi
 ##############################################
 # variables
 olddir=~/dotfiles_old                   # old dotfiles backup directory
-files="bash_profile vimrc vim gitconfig config emacs.d"      # list of files/folders to symlink in homedir
+files="bashrc bash_profile vimrc vim gitconfig config emacs.d"      # list of files/folders to symlink in homedir
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~"
@@ -62,5 +71,3 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s "$(pwd)"/.$file ~/.$file
 done
-
-#ln -s $dir/syspython2/ ~/syspython2

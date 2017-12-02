@@ -17,6 +17,14 @@
 (use-package evil
   :ensure t
   :demand t
+  :bind (:map evil-motion-state-map
+	      ("j" . evil-next-visual-line)
+	      ("k" . evil-previous-visual-line)
+	      ("C-j" . evil-scroll-down)
+	      ("C-k" . evil-scroll-up)
+	      :map evil-normal-state-map
+	      ("[ q" . previous-error)
+	      ("] q" . next-error))
   :config
   (evil-mode t))
 
@@ -35,10 +43,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(package-selected-packages
    (quote
-    (solarized-theme color-theme-solarized evil-magit magit which-key evil-org evil use-package))))
+    (exec-path-from-shell counsel-projectile projectile-ripgrep lenlen-theme projectile counsel ivy-hydra swiper ivy smex ido-vertical-mode ido-completing-read+ solarized-theme color-theme-solarized evil-magit magit which-key evil-org evil use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -75,6 +83,122 @@
                             'replace)
     (setq magit-completing-read-function #'magit-ido-completing-read))
 
-(use-package solarized-theme
+(use-package color-theme-solarized
     :ensure t
-    :config (load-theme 'solarized-light t))
+    :config (load-theme 'solarized t))
+
+(use-package ido
+    :init
+    (setq ido-create-new-buffer 'always
+          ido-enable-flex-matching t
+          ido-use-faces nil)
+    :config
+    (ido-mode t)
+    (ido-everywhere t))
+
+  (use-package ido-completing-read+
+    :ensure t
+    :config (ido-ubiquitous-mode t))
+ 
+ (use-package ido-vertical-mode
+    :ensure t
+    :after ido
+    :init
+    (setq ido-vertical-indicator "─►")
+    :config
+    (defun jafo/ido-setup-hook ()
+      (define-key ido-completion-map (kbd "C-j") #'ido-next-match)
+      (define-key ido-completion-map (kbd "C-k") #'ido-prev-match))
+    (add-hook 'ido-setup-hook #'jafo/ido-setup-hook)
+    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+    (ido-vertical-mode t))
+
+   (use-package smex
+     :ensure t)
+
+  (use-package ivy
+    :ensure t
+    :diminish ivy-mode
+    :bind (:map ivy-minibuffer-map
+                ("C-j" . ivy-next-line)
+                ("C-k" . ivy-previous-line))
+    :init
+    (setq ivy-count-format ""
+          ivy-format-function #'ivy-format-function-arrow
+          ivy-use-virtual-buffers t
+          ;;ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+          )
+    :config
+    (ivy-mode t)
+    (with-eval-after-load 'magit
+      (setq magit-completing-read-function 'ivy-completing-read))
+    (with-eval-after-load 'projectile
+      (setq projectile-completion-system 'ivy)))
+
+  (use-package swiper
+    :ensure t)
+
+  (use-package ivy-hydra
+    :ensure t)
+
+(use-package counsel
+    :ensure t
+    :bind (("M-x" . counsel-M-x)
+           ("C-x C-f" . counsel-find-file)
+           ("C-h f" . counsel-describe-function)
+           ("C-h v" . counsel-describe-variable)
+           :map evil-normal-state-map
+           ("<SPC> i" . counsel-imenu)))
+
+  (use-package counsel-projectile
+    :ensure t
+    :after projectile
+    :bind (:map projectile-command-map
+                ("/" . counsel-projectile-rg))
+    :config (counsel-projectile-on))
+
+(use-package projectile
+    :ensure t
+    :pin melpa-stable
+    :init
+    (setq projectile-mode-line '(:eval (format " P⟨%s⟩" (projectile-project-name))))
+    :config
+    (with-eval-after-load 'evil
+      (define-key evil-normal-state-map (kbd "<SPC> p") 'projectile-command-map))
+    (projectile-global-mode))
+
+ (use-package djinni-mode
+    :load-path "~/Documents/github/djinni-mode.el")
+
+(setq inhibit-default-init t
+      load-prefer-newer t
+      indicate-empty-lines t
+      inhibit-startup-screen t
+      initial-scratch-message nil
+      ring-bell-function 'ignore
+      scroll-conservatively 10000
+      scroll-preserve-screen-position t
+      use-dialog-box nil
+      )
+
+(setq-default
+ cursor-in-non-selected-windows nil
+ )
+
+(fset 'yes-or-no-p #'y-or-n-p)
+(global-hl-line-mode t)
+(global-visual-line-mode 0)
+(line-number-mode 0)
+(scroll-bar-mode 0)
+(show-paren-mode t)
+(tool-bar-mode 0)
+
+(use-package projectile-ripgrep
+  :ensure t
+  :after projectile
+  :bind (:map projectile-command-map
+	      ("s r" . projectile-ripgrep)))
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config (exec-path-from-shell-initialize))
