@@ -26,15 +26,6 @@ export LSCOLORS=fxdxcxgxBxHxexbDfDehbh
 export HISTCONTROL="erasedups"
 export HISTIGNORE="ls:ll:la:lab"
 export JENKINS_DIR=${HOME}/bin/jinkens
-export EDITOR=nvim
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-#export ANDROID_HOME=${HOME}/Library/Android/sdk
-# Setup a red prompt for root and a green one for users.
-NORMAL="\[\e[0m\]"
-RED="\[\e[1;31m\]"
-GREEN="\[\e[1;32m\]"
-BROWN="\[\e[1;33m\]"
-CYAN="\[\e[1;36m\]"
 
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
