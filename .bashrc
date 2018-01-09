@@ -1,4 +1,17 @@
 
+########################################################################################
+# Environtment Variables
+#
+#	PATH - Specifies a set of directories where executable programs are located.
+#	HOME - Specifies the home directory.
+#	MAKEFILES - Specifies the directory where a makefile is located
+#	CLICOLOR -
+#	LSCOLORS -
+#	HISTCONTROL -
+#	HISTIGNORE -
+#	EDITOR -
+########################################################################################
+
 PROMPT_COMMAND='__git_ps1 "$GREEN\u:$CYAN[\w]" $BROWN"\\\$ $NORMAL"'
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1

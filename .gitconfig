@@ -7,3 +7,9 @@
 [user]
 	name = Riley Crebs
 	email = rcrebs@salesforce.com
+[credential]
+	helper = osxkeychain
+[core]
+	excludesfile = /Users/rcrebs/.gitignore_global
+[commit]
+	template = /Users/rcrebs/.stCommitMsg

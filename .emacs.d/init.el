@@ -28,6 +28,21 @@
   :config
   (evil-mode t))
 
+(use-package company
+    :ensure t
+    :diminish ""
+    :config
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-j") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (define-key company-active-map (kbd "C-k") #'company-select-previous)
+    (setq company-idle-delay 0.5
+          company-dabbrev-downcase nil    ; pretty sure company has a bug in the default
+          company-require-match nil
+          company-selection-wrap-around t
+          company-tooltip-align-annotations t)
+    (global-company-mode t))
+
 (use-package evil-org
     :ensure t
     :after org
@@ -46,7 +61,14 @@
     ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell counsel-projectile projectile-ripgrep lenlen-theme projectile counsel ivy-hydra swiper ivy smex ido-vertical-mode ido-completing-read+ solarized-theme color-theme-solarized evil-magit magit which-key evil-org evil use-package))))
+    (company-rtags ivy-rtags flycheck-rtags rtags exec-path-from-shell counsel-projectile projectile-ripgrep lenlen-theme projectile counsel ivy-hydra swiper ivy smex ido-vertical-mode ido-completing-read+ solarized-theme color-theme-solarized evil-magit magit which-key evil-org evil use-package)))
+ '(safe-local-variable-values
+   (quote
+    ((projectile-project-test-cmd . "make ios.test | xcpretty")
+     (projectile-project-compilation-cmd . "make ios.build | xcpretty")
+     (projectile-globally-unignored-directories "generated-src")
+     (projectile-enable-caching . t)
+     (ghub-base-url . "https://git.soma.salesforce.com/api/v3")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -202,3 +224,51 @@
 (use-package exec-path-from-shell
   :ensure t
   :config (exec-path-from-shell-initialize))
+
+(use-package rtags
+    :ensure t
+    :config
+    (defvar my-rtags-command-map (make-sparse-keymap))
+    (fset 'my-rtags-command-map my-rtags-command-map)
+    (setq rtags-autostart-diagnostics t
+          rtags-completions-enabled t)
+    ;; (rtags-enable-standard-keybindings)
+    (rtags-enable-standard-keybindings my-rtags-command-map "")
+    (with-eval-after-load 'evil
+      (evil-define-key 'normal c-mode-base-map (kbd "<SPC> r") 'my-rtags-command-map))
+    (rtags-diagnostics)
+    )
+
+ (use-package flycheck-rtags
+    :ensure t
+    :after rtags)
+
+  (use-package ivy-rtags
+    :ensure t
+    :after rtags
+    :config
+    (setq rtags-display-result-backend 'ivy))
+
+  (use-package company-rtags
+    :ensure t
+    :after rtags
+    :config
+    (push 'company-rtags company-backends))
+
+(setq compilation-always-kill t
+        compilation-ask-about-save nil
+        compilation-read-command nil
+        compilation-scroll-output 'always)
+
+  (require 'ansi-color)
+  (defun my-colorize-compilation-buffer ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region compilation-filter-start (point))))
+  (add-hook 'compilation-filter-hook #'my-colorize-compilation-buffer)
+
+  (with-eval-after-load 'compile
+    (add-to-list 'compilation-error-regexp-alist 'xcpretty)
+    (add-to-list 'compilation-error-regexp-alist-alist
+                 '(xcpretty
+                   "^\\(?:\\(\u26a0\ufe0f\\|\\[!\\]\\)\\|\\(?:\u274c\\|\\[x\\]\\)\\)\\s-+\\([^:]+?\\):\\([0-9]+\\):\\([0-9]+\\): .*"
+                   2 3 4 nil 2)))
