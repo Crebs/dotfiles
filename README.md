@@ -5,5 +5,6 @@ Collection of dot files
 1. Add Machine to supported SSH Keys
 
 ## Setup Emacs
-1. ```M-x package-install
-   diminish```
+1. ```
+M-x package-install
+diminish```
