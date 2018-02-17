@@ -5,6 +5,7 @@
              ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -14,19 +15,7 @@
 (require 'diminish)
 (require 'bind-key)
 
-(use-package evil
-  :ensure t
-  :demand t
-  :bind (:map evil-motion-state-map
-	      ("j" . evil-next-visual-line)
-	      ("k" . evil-previous-visual-line)
-	      ("C-j" . evil-scroll-down)
-	      ("C-k" . evil-scroll-up)
-	      :map evil-normal-state-map
-	      ("[ q" . previous-error)
-	      ("] q" . next-error))
-  :config
-  (evil-mode t))
+(org-babel-load-file "~/.emacs.d/Readme.org")
 
 (use-package company
     :ensure t
@@ -61,7 +50,7 @@
     ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(package-selected-packages
    (quote
-    (company-rtags ivy-rtags flycheck-rtags rtags exec-path-from-shell counsel-projectile projectile-ripgrep lenlen-theme projectile counsel ivy-hydra swiper ivy smex ido-vertical-mode ido-completing-read+ solarized-theme color-theme-solarized evil-magit magit which-key evil-org evil use-package)))
+    (flyspell-correct-ivy company-rtags ivy-rtags flycheck-rtags rtags exec-path-from-shell counsel-projectile projectile-ripgrep lenlen-theme projectile counsel ivy-hydra swiper ivy smex ido-vertical-mode ido-completing-read+ solarized-theme color-theme-solarized evil-magit magit which-key evil-org evil use-package)))
  '(safe-local-variable-values
    (quote
     ((projectile-project-test-cmd . "make ios.test | xcpretty")
@@ -75,6 +64,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(use-package flyspell
+    :diminish ""
+    :config
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+
+(use-package flyspell-correct-ivy
+    :ensure t
+    :after ivy
+    :bind (:map flyspell-mode-map
+           ("C-;" . flyspell-correct-previous-word-generic)))
 
 (use-package which-key
     :ensure t

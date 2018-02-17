@@ -31,6 +31,12 @@ if brew ls --versions emacs > /dev/null; then
 else
     brew install emacs --with-cocoa
 fi
+# Install aspell
+if brew ls --version aspell > /dev/null; then
+    echo "aspell already installed"
+else
+   brew install aspell
+fi
 
 
 ##########################################
